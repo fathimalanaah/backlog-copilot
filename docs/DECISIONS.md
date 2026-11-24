@@ -31,3 +31,10 @@ Date: 2026-11-24 · Stage 1 (planning)
 | DEC-25 | Raised the maximum backlog size to 14 stories while retaining exactly eight Must stories. Split the grouped Should stories into independent dependencies/decisions/open questions, test-case generation, RICE scoring and Supabase persistence stories. Renumbered mock mode to US-13 and Jira export to US-14. | Maintain independent, estimable and testable stories without expanding functional scope. |
 | DEC-26 | Established the build order as US-01, US-04, US-13, then US-02 onward. Updated mock-mode implementation dependencies to support early development.                                                                                                                                                              | Enable initial development and demonstration without a live API key.                     |
 | DEC-27 | Updated story dependencies, estimates, backlog totals and implementation-budget references to reflect 14 stories and 43 story points, while retaining the 21-hour budget.                                                                                                                                       | Maintain consistency between backlog scope, prioritization and implementation planning.  |
+
+## Stage 3 (2026-11-24)
+
+| ID | Decision | Rationale |
+| --- | --- | --- |
+| DEC-28 | The evidence-quote length (20 words) and match are checked after schema validation, not inside the schema. | One unsupported story is dropped instead of rejecting the whole AI response (OQ-07). |
+| DEC-29 | The approved field is hidden from the JSON schema sent to the AI and reset to false on every load. | Only the Product Owner can approve a story (US-07). |

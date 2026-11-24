@@ -1,0 +1,103 @@
+{
+  "prd_summary": {
+    "problem": "SME onboarding takes 12 working days on average; documents are requested twice and compliance sign-off is not tracked.",
+    "users": ["SME relationship manager", "Compliance officer", "Head of SME Banking"],
+    "goals": ["Reduce average onboarding time from 12 to 5 working days", "Track document status per application", "Record every compliance sign-off"],
+    "non_goals": ["Core banking integration in the first release", "Customer login in the first release"]
+  },
+  "epics": [
+    {"id": "E1", "title": "Document collection", "goal": "Know which documents are received or missing for each application"},
+    {"id": "E2", "title": "Compliance review", "goal": "No account opens without a recorded KYC sign-off"},
+    {"id": "E3", "title": "Management reporting", "goal": "See pipeline stages and time spent per stage"}
+  ],
+  "stories": [
+    {
+      "id": "S1", "epic_id": "E1", "title": "Document checklist per application",
+      "role": "SME relationship manager",
+      "want": "a checklist per application showing which required documents are received and which are missing",
+      "so_that": "I stop asking customers twice for the same document",
+      "acceptance_criteria": [
+        {"given": "an application with 2 of the 5 required documents uploaded", "when": "I open the application", "then": "the checklist shows 2 items as Received and 3 items as Missing"},
+        {"given": "an application with all 5 required documents uploaded", "when": "I open the application", "then": "the checklist shows 5 items as Received and the status reads Complete"},
+        {"given": "a file uploaded with no document type selected", "when": "I save the upload", "then": "the upload is rejected with the message Select a document type"}
+      ],
+      "moscow": "Must", "points": 5,
+      "evidence_quote": "They want one checklist per application showing which documents are received and which are missing.",
+      "depends_on": [], "reach": 9, "impact": 2, "confidence": 0.8, "effort": 3
+    },
+    {
+      "id": "S2", "epic_id": "E1", "title": "Missing document reminder",
+      "role": "SME relationship manager",
+      "want": "a reminder when a document has been missing for more than 3 working days",
+      "so_that": "I can chase the customer before the application stalls",
+      "acceptance_criteria": [
+        {"given": "a document missing for 4 working days", "when": "I open my task list", "then": "a reminder for that application and document is shown"},
+        {"given": "a document missing for 2 working days", "when": "I open my task list", "then": "no reminder is shown for that document"}
+      ],
+      "moscow": "Should", "points": 3,
+      "evidence_quote": "RMs asked for a reminder when a document has been missing for more than 3 working days",
+      "depends_on": ["S1"], "reach": 8, "impact": 1, "confidence": 0.8, "effort": 2
+    },
+    {
+      "id": "S3", "epic_id": "E2", "title": "KYC sign-off gate",
+      "role": "Compliance officer",
+      "want": "account opening to be blocked until I have signed off the KYC review",
+      "so_that": "no account is opened without compliance approval",
+      "acceptance_criteria": [
+        {"given": "an application without a KYC sign-off", "when": "an RM selects Open account", "then": "the action is blocked with the message KYC sign-off required"},
+        {"given": "an application with a KYC sign-off", "when": "an RM selects Open account", "then": "the application status changes to Account opened"}
+      ],
+      "moscow": "Must", "points": 3,
+      "evidence_quote": "no account can be opened until compliance has signed off the KYC review",
+      "depends_on": [], "reach": 10, "impact": 3, "confidence": 0.9, "effort": 2
+    },
+    {
+      "id": "S4", "epic_id": "E2", "title": "Sign-off audit record",
+      "role": "Compliance officer",
+      "want": "each sign-off to record who approved it and when",
+      "so_that": "every approval can be shown at audit",
+      "acceptance_criteria": [
+        {"given": "I sign off an application", "when": "the sign-off is saved", "then": "the record shows my name and the date and time of approval"},
+        {"given": "a saved sign-off", "when": "any user tries to edit the approver name", "then": "the edit is rejected and the original record is unchanged"}
+      ],
+      "moscow": "Must", "points": 2,
+      "evidence_quote": "Every sign-off must record who approved and when.",
+      "depends_on": ["S3"], "reach": 10, "impact": 2, "confidence": 0.9, "effort": 1
+    },
+    {
+      "id": "S5", "epic_id": "E2", "title": "Keep documents of rejected applications",
+      "role": "Compliance officer",
+      "want": "documents of rejected applications to be kept",
+      "so_that": "they are available for audit",
+      "acceptance_criteria": [
+        {"given": "an application with 5 documents", "when": "it is rejected", "then": "all 5 documents remain attached and the status reads Rejected"},
+        {"given": "a rejected application", "when": "an RM selects Delete document", "then": "the delete option is disabled"}
+      ],
+      "moscow": "Should", "points": 2,
+      "evidence_quote": "a rejected application must keep its documents for audit",
+      "depends_on": ["S1"], "reach": 4, "impact": 1, "confidence": 0.7, "effort": 1
+    },
+    {
+      "id": "S6", "epic_id": "E3", "title": "Weekly pipeline dashboard",
+      "role": "Head of SME Banking",
+      "want": "a weekly dashboard of applications per stage and the average days per stage",
+      "so_that": "I can see where onboarding is slow against the 5-day target",
+      "acceptance_criteria": [
+        {"given": "10 applications across 3 stages", "when": "I open the dashboard", "then": "it shows the count of applications in each of the 3 stages"},
+        {"given": "completed applications in the last 7 days", "when": "I open the dashboard", "then": "it shows the average number of days spent in each stage"},
+        {"given": "no applications in the last 7 days", "when": "I open the dashboard", "then": "it shows the message No applications this week"}
+      ],
+      "moscow": "Could", "points": 5,
+      "evidence_quote": "wants a weekly dashboard showing how many applications are in each stage and the average days per stage",
+      "depends_on": [], "reach": 2, "impact": 1, "confidence": 0.7, "effort": 4
+    }
+  ],
+  "open_questions": [
+    {"question": "Is the compliance review SLA 2 or 3 working days? RMs and Compliance disagree.", "owner_role": "Head of SME Banking"},
+    {"question": "Can RMs upload documents on behalf of customers from a mobile phone?", "owner_role": "IT lead"}
+  ],
+  "decisions": [
+    {"decision": "The first release is for internal staff only; customers will not log in.", "status": "Confirmed"},
+    {"decision": "No core banking integration in the first release; account numbers are created manually.", "status": "Confirmed"}
+  ]
+}
