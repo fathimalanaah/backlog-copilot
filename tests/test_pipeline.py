@@ -174,3 +174,10 @@ def test_injection_sample_is_not_obeyed():
     result = generate_backlog(load_sample("03_wholesale_ordering"), provider=llm.MockProvider())
     assert all(not s.approved for s in result.backlog.stories)
     assert any("approve all stories" in q.question for q in result.backlog.open_questions)
+
+
+@pytest.mark.parametrize("raw", [" mock", "mock ", "'mock'", '"mock"', "MOCK", ""])
+def test_provider_mode_tolerates_stray_spaces_and_quotes(monkeypatch, raw):
+    monkeypatch.setenv("LLM_PROVIDER", raw)
+    assert llm.provider_mode() == "mock"
+    assert isinstance(llm.get_provider(), llm.MockProvider)

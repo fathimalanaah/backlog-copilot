@@ -111,8 +111,14 @@ class MockProvider:
         )
 
 
+def provider_mode() -> str:
+    """LLM_PROVIDER, tolerant of stray spaces/quotes pasted into secret managers."""
+    raw = os.getenv("LLM_PROVIDER") or "mock"
+    return raw.strip().strip("'\"").strip().lower() or "mock"
+
+
 def get_provider() -> Provider:
-    mode = os.getenv("LLM_PROVIDER", "mock").strip().lower()
+    mode = provider_mode()
     if mode != "mock":
         # DEC-30: live AI is out of scope for this release.
         raise GenerationError(

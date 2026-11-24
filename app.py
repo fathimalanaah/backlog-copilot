@@ -7,7 +7,6 @@ export CSV / Markdown, optionally save approved stories to Supabase.
 
 from __future__ import annotations
 
-import os
 
 import pandas as pd
 import streamlit as st
@@ -171,7 +170,7 @@ st.title("🗂️ Backlog Copilot")
 st.caption("Workshop notes → evidence-backed user stories → human review → export. "
            "AI drafts; rules check; the Product Owner approves.")
 
-mode = os.getenv("LLM_PROVIDER", "mock")
+mode = llm.provider_mode()
 with st.sidebar:
     st.subheader("Mode")
     if mode == "mock":
@@ -194,7 +193,9 @@ for level, message in ss.flash:
 ss.flash = []
 
 tab_input, tab_backlog, tab_quality, tab_prior, tab_export, tab_saved = st.tabs(
-    ["1 · Input", "2 · Backlog", "3 · Quality", "4 · Prioritise", "5 · Export", "6 · Saved"]
+    ["1 · Input", "2 · Backlog", "3 · Quality", "4 · Prioritise", "5 · Export", "6 · Saved"],
+    key="main_tabs",
+    on_change="rerun",  # remember the open tab so approving/editing doesn't jump back to Input
 )
 
 # ---- 1 · Input -------------------------------------------------------------
