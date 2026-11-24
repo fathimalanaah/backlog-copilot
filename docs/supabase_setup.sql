@@ -11,6 +11,11 @@ create table if not exists public.saved_stories (
 
 alter table public.saved_stories enable row level security;
 
+-- Newer Supabase projects do not auto-grant new tables to the public (anon) role.
+-- Grant insert + read only (no update/delete).
+grant select, insert on public.saved_stories to anon;
+grant usage, select on sequence public.saved_stories_id_seq to anon;
+
 -- Single-user portfolio demo: the public (anon) key may insert and read rows,
 -- but cannot update or delete them, so saved approvals are never altered.
 -- A production version would require sign-in and per-user policies.
