@@ -12,7 +12,7 @@
 | 6 | Load sample 03 → Generate → scroll to **Dropped stories** | "These notes contained an injected instruction and the draft invented a loyalty feature. The evidence check dropped the invented story, and nothing was auto-approved." | — |
 | 7 | Prioritise tab | "RICE is calculated by code, not by the AI. Changing inputs on an approved story un-approves it." | — |
 | 8 | Approve 2 stories → Export → download CSV | "Only approved stories leave the tool, with derived test cases." | Show `docs/EVALUATION.md` |
-| 9 | GitHub: tests + `docs/` | "75 automated tests map to my PRD. Honest limit: this release runs on cached output, so I don't claim live-AI accuracy yet." | — |
+| 9 | GitHub: tests + `docs/` | "81 automated tests map to my PRD. Honest limit: this release runs on cached output, so I don't claim live-AI accuracy yet." | — |
 
 ## Likely questions
 

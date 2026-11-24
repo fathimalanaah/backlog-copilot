@@ -157,7 +157,7 @@ def on_rice_edit() -> None:
 def on_save_db() -> None:
     try:
         n = storage.save_approved(backlog(), ss.get("project_name") or "Untitled", ss.notes_used)
-        flash("success", f"Saved {n} approved stories to Supabase.")
+        flash("success", f"Saved {n} approved {'story' if n == 1 else 'stories'} to Supabase.")
     except export.NoApprovedStoriesError as exc:
         flash("error", str(exc))
     except storage.StorageError as exc:

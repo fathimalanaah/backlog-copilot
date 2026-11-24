@@ -16,7 +16,7 @@ The right-hand column needs a live LLM (PRD success metrics, section 1.6). Metho
 
 ## Automated test results
 
-`python -m pytest -q` → **75 passed** (local and in Replit).
+`python -m pytest -q` → **81 passed** (local and in Replit). Live deployment smoke-tested end to end on Streamlit Community Cloud, including a real Supabase save and read.
 
 | Area | PRD stories | Tests | Result |
 |---|---|---|---|

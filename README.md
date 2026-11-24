@@ -3,7 +3,7 @@
 **Turns raw client-workshop notes into a reviewed product backlog: epics, user stories with Gherkin acceptance criteria, MoSCoW and RICE priorities, and test cases. Every story must quote the notes, a rule-based checker flags vague criteria, and nothing is exported until a Product Owner approves it.**
 
 > Portfolio project 1 of 6 · Built by Fathima · Python · Streamlit · Pydantic · Supabase · Replit
-> Live demo: _see the link in the repository's About section_ · All data is fictional.
+> **Live demo: https://backlog-copilot-fathima.streamlit.app** · All data is fictional.
 
 ---
 
@@ -69,12 +69,12 @@ notes ─▶ validate input ─▶ Provider (mock: cached JSON)
 
 ## Testing
 
-**75 automated tests** (`python -m pytest -q`), each tied to a PRD story:
+**81 automated tests** (`python -m pytest -q`), each tied to a PRD story:
 
 | Test file | Tests | Covers |
 |---|---|---|
 | `test_schemas.py` | 13 | Schema rules, approval hidden from the AI |
-| `test_pipeline.py` | 23 | Input limits, uploads, mock mode, retry-once, evidence drop, injection |
+| `test_pipeline.py` | 29 | Input limits, uploads, mock mode (incl. messy settings), retry-once, evidence drop, injection |
 | `test_quality_scoring.py` | 24 | Vague words, criteria count, edit checks, duplicates, RICE |
 | `test_export_storage.py` | 10 | Approved-only export, test cases, Supabase save/fail paths |
 | `test_app.py` | 5 | End-to-end UI flow with Streamlit AppTest |
