@@ -1,0 +1,100 @@
+{
+  "prd_summary": {
+    "problem": "About 400 permit renewals a month arrive by email and walk-in and are re-typed into a spreadsheet; unpaid fines and slow decisions are not visible.",
+    "users": ["Customer service agent", "Permits supervisor", "Service centre manager"],
+    "goals": ["Capture renewals through one online form", "Block approval when fines are unpaid", "Show the fee before submission"],
+    "non_goals": ["Renewals for permits expired more than 6 months ago"]
+  },
+  "epics": [
+    {"id": "E1", "title": "Renewal request intake", "goal": "Capture every renewal request once, with a reference number"},
+    {"id": "E2", "title": "Approval controls", "goal": "Approve only renewals with no unpaid fines and visible fees"},
+    {"id": "E3", "title": "Follow-up", "goal": "Find requests quickly and surface overdue ones"}
+  ],
+  "stories": [
+    {
+      "id": "S1", "epic_id": "E1", "title": "Online renewal form",
+      "role": "Customer service agent",
+      "want": "an online renewal form that captures permit number, company name, contact email and renewal period",
+      "so_that": "I no longer re-type requests from email into a spreadsheet",
+      "acceptance_criteria": [
+        {"given": "the renewal form", "when": "I submit it with all four fields completed and a period of 1 or 2 years", "then": "the request is saved with status Submitted"},
+        {"given": "the renewal form with the permit number empty", "when": "I submit it", "then": "the message Permit number is required is shown and nothing is saved"},
+        {"given": "a saved request", "when": "I open it", "then": "the page loads fast and shows the details"}
+      ],
+      "moscow": "Must", "points": 3,
+      "evidence_quote": "Agents want an online renewal request form that captures the permit number, company name, contact email and the renewal period",
+      "depends_on": [], "reach": 10, "impact": 2, "confidence": 0.9, "effort": 3
+    },
+    {
+      "id": "S2", "epic_id": "E1", "title": "Reference number per request",
+      "role": "Customer service agent",
+      "want": "every renewal request to get a reference number",
+      "so_that": "customers can quote it when they call",
+      "acceptance_criteria": [
+        {"given": "a renewal request is submitted", "when": "it is saved", "then": "a unique reference number in the format RN-000001 is shown"},
+        {"given": "two requests submitted one after the other", "when": "both are saved", "then": "their reference numbers are different"}
+      ],
+      "moscow": "Must", "points": 2,
+      "evidence_quote": "Every renewal request must get a reference number that the customer can quote when they call.",
+      "depends_on": ["S1"], "reach": 10, "impact": 1, "confidence": 0.9, "effort": 1
+    },
+    {
+      "id": "S3", "epic_id": "E2", "title": "Block approval when fines are unpaid",
+      "role": "Permits supervisor",
+      "want": "approval to be blocked when the company has unpaid fines",
+      "so_that": "no permit is renewed while fines are outstanding",
+      "acceptance_criteria": [
+        {"given": "a company with AED 500 of unpaid fines", "when": "an agent opens the renewal", "then": "the outstanding amount AED 500 is shown and Send for approval is disabled"},
+        {"given": "a company with no unpaid fines", "when": "an agent opens the renewal", "then": "Send for approval is enabled"}
+      ],
+      "moscow": "Must", "points": 3,
+      "evidence_quote": "a renewal cannot be approved if the company has unpaid fines",
+      "depends_on": ["S1"], "reach": 10, "impact": 3, "confidence": 0.8, "effort": 2
+    },
+    {
+      "id": "S4", "epic_id": "E2", "title": "Show renewal fee before submission",
+      "role": "Customer service agent",
+      "want": "the renewal fee to be shown before the request is submitted",
+      "so_that": "the customer knows the cost up front",
+      "acceptance_criteria": [
+        {"given": "a renewal period of 1 year is selected", "when": "the form is displayed", "then": "the fee shows AED 1,200"},
+        {"given": "a renewal period of 2 years is selected", "when": "the form is displayed", "then": "the fee shows AED 2,200"}
+      ],
+      "moscow": "Should", "points": 2,
+      "evidence_quote": "the fee must be shown before the customer submits",
+      "depends_on": ["S1"], "reach": 9, "impact": 1, "confidence": 0.9, "effort": 1
+    },
+    {
+      "id": "S5", "epic_id": "E3", "title": "Search by permit or reference number",
+      "role": "Customer service agent",
+      "want": "to search requests by permit number or reference number",
+      "so_that": "I can answer phone calls without asking the customer to wait",
+      "acceptance_criteria": [
+        {"given": "a request with reference RN-000123", "when": "I search for RN-000123", "then": "exactly that request is listed"},
+        {"given": "no request with permit number P-999", "when": "I search for P-999", "then": "the message No matching requests is shown"}
+      ],
+      "moscow": "Should", "points": 2,
+      "evidence_quote": "Agents asked for a search by permit number or reference number",
+      "depends_on": ["S2"], "reach": 7, "impact": 1, "confidence": 0.8, "effort": 2
+    },
+    {
+      "id": "S6", "epic_id": "E3", "title": "Highlight overdue requests",
+      "role": "Service centre manager",
+      "want": "requests older than 5 working days without a decision to be highlighted for the supervisor",
+      "so_that": "slow renewals are noticed and chased",
+      "acceptance_criteria": [
+        {"given": "a request submitted 6 working days ago with no decision", "when": "the supervisor opens the request list", "then": "the request is shown with an Overdue label"},
+        {"given": "a request submitted 3 working days ago", "when": "the supervisor opens the request list", "then": "no Overdue label is shown for it"}
+      ],
+      "moscow": "Could", "points": 3,
+      "evidence_quote": "wants requests older than 5 working days without a decision to be highlighted for the supervisor",
+      "depends_on": [], "reach": 4, "impact": 1, "confidence": 0.7, "effort": 2
+    }
+  ],
+  "open_questions": [
+    {"question": "Should customers receive an SMS, or only an email, when a renewal is approved?", "owner_role": "Service centre manager"}
+  ],
+  "decisions": [
+    {"decision": "Renewals for permits expired more than 6 months ago are out of scope and use the new-permit process.", "status": "Confirmed"}
+  ]
+}
