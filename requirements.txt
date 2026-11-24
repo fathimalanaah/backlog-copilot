@@ -1,0 +1,6 @@
+streamlit
+pydantic
+anthropic
+supabase
+pandas
+pytest
